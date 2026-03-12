@@ -24,6 +24,14 @@ A powerful, local LLM-powered email and messaging assistant. It automatically cl
 3. **Configure**: Add `credentials.json` for Gmail and update `.env` for WhatsApp.
 4. **Run**: `python run.py`.
 
+## 📁 Project Structure
+- `app/api`: FastAPI endpoints and specialized routes.
+- `app/services`: Core logic (Gmail API, AI Processor, WhatsApp).
+- `app/models`: Pydantic data schemas.
+- `app/utils`: Prompt engineering and common helpers.
+- `static`: Frontend assets (HTML, CSS, JavaScript).
+- `config`: Environment and user-specific configurations.
+
 ## 🔒 Security
 This project prioritizes privacy. All AI processing is performed locally. Sensitive files like `token.json` and credentials are never stored in version control.
 
