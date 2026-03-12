@@ -52,7 +52,9 @@ class GmailService:
             return []
 
         try:
-            results = service.users().messages().list(userId='me', q='is:unread', maxResults=max_results).execute()
+            # Query: unread messages specifically in the INBOX to be more inclusive
+            query = 'label:INBOX is:unread'
+            results = service.users().messages().list(userId='me', q=query, maxResults=max_results).execute()
             messages = results.get('messages', [])
             
             emails = []
@@ -66,7 +68,8 @@ class GmailService:
                     'threadId': txt['threadId'],
                     'subject': '',
                     'sender': '',
-                    'body': ''
+                    'body': '',
+                    'timestamp': int(txt.get('internalDate', 0)) // 1000  # Convert to seconds
                 }
                 
                 for header in headers:
@@ -120,7 +123,7 @@ class GmailService:
                 if header['name'] == 'Message-ID':
                     msg_id = header['value']
 
-            # Create the MIME message manually or using email.mime
+            # Create the MIME message
             from email.mime.text import MIMEText
             message = MIMEText(reply_text)
             message['to'] = to
@@ -135,7 +138,7 @@ class GmailService:
                 body={'raw': raw, 'threadId': thread_id}
             ).execute()
             
-            # Mark the original as read (remove UNREAD label)
+            # Mark the original as read
             service.users().messages().batchModify(
                 userId='me',
                 body={
@@ -145,9 +148,25 @@ class GmailService:
             ).execute()
             
             return True
-
         except Exception as e:
             logger.error(f"Error sending reply: {e}")
+            return False
+
+    def send_new_email(self, recipient, subject, body):
+        """Sends a new email."""
+        service = self.get_service()
+        if not service:
+            return False
+        try:
+            from email.mime.text import MIMEText
+            message = MIMEText(body)
+            message['to'] = recipient
+            message['subject'] = subject
+            raw = base64.urlsafe_b64encode(message.as_bytes()).decode()
+            service.users().messages().send(userId='me', body={'raw': raw}).execute()
+            return True
+        except Exception as e:
+            logger.error(f"Error sending new email: {e}")
             return False
 
 gmail_service = GmailService()

@@ -22,13 +22,14 @@ app = FastAPI(
 # Include API routes
 app.include_router(router, prefix="/api/v1")
 
-# Mount static files for the dashboard
+# Mount static files correctly
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def serve_dashboard():
-    return FileResponse("static/index.html")
+    # Provide the path relative to the project root
+    return FileResponse(os.path.join("static", "index.html"))
 
 @app.on_event("startup")
 async def startup_event():

@@ -29,9 +29,14 @@ class OllamaService:
             logger.error(f"Error getting models: {e}")
             return [self.default_model]
     
-    def get_llm(self, model_name: str = None):
+    def get_llm(self, model_name: str = None, system: str = None):
         model = model_name if model_name in self.available_models else self.default_model
-        return Ollama(model=model, base_url=self.base_url)
+        # Inject system prompt via model parameters
+        return Ollama(
+            model=model, 
+            base_url=self.base_url,
+            system=system
+        )
     
     def test_connection(self) -> dict:
         try:

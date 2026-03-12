@@ -3,107 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Mail Assistant | Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <title>AI Mail Assistant | Professional Dashboard</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Iconography -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Premium Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="background-glow"></div>
-    
-    <nav class="sidebar">
-        <div class="logo">
-            <span class="logo-icon">🤖</span>
-            <span class="logo-text">AI Mail</span>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-box">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">AI Mail</span>
+                    <span class="brand-version">v1.0.0</span>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#setup" class="nav-item">
+                    <i class="fas fa-plug"></i>
+                    <span>Connection</span>
+                </a>
+                <a href="http://localhost:8000/docs" target="_blank" class="nav-item">
+                    <i class="fas fa-code"></i>
+                    <span>API Doc</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-helper">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Helper</span>
+                </a>
+                <a href="#working" class="nav-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>Working</span>
+                </a>
+                <a href="#setup" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Setting</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="engine-status">
+                    <div class="status-indicator">
+                        <div class="dot pulsing" id="status-dot"></div>
+                        <span id="status-text">Ollama: Offline</span>
+                    </div>
+                </div>
+                <div class="user-credits">
+                    <span>Made by <a href="https://rudra-gupta.vercel.app" target="_blank">Rudra Gupta</a></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search insights...">
+                </div>
+                <div class="user-profile">
+                    <span class="user-name">Welcome Back</span>
+                    <div class="avatar">RG</div>
+                </div>
+            </header>
+
+            <div class="dashboard-scroll">
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1>Smart Communication</h1>
+                        <p>Managing your Gmail & WhatsApp streams with local privacy-first AI.</p>
+                    </div>
+                    <div class="system-stats">
+                        <div class="stat-card">
+                            <span class="stat-label">Model Engine</span>
+                            <span class="stat-value" id="model-display">Llama 3.1</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Privacy Mode</span>
+                            <span class="stat-value text-success">Local Only</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="bento-grid">
+                    <!-- Gmail Automation Card -->
+                    <div class="bento-card gmail-card">
+                        <div class="card-header">
+                            <div class="icon-circle gmail-bg">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>Gmail Sync</h3>
+                                <p>Automated inbox management</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="sync-status-box">
+                                <span class="label">Last Sync</span>
+                                <span class="value" id="last-sync-time">Never</span>
+                            </div>
+                            <button class="primary-btn" id="btn-sync-gmail">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Process Unread</span>
+                                <div class="loader hidden" id="sync-loader"></div>
+                            </button>
+                        </div>
+                        <div class="card-footer" id="sync-summary">
+                            <span class="placeholder">Ready to analyze your inbox.</span>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp Status Card -->
+                    <div class="bento-card whatsapp-card">
+                        <div class="card-header">
+                            <div class="icon-circle whatsapp-bg">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>WhatsApp</h3>
+                                <p>Real-time automation</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="status-badge" id="wa-status">
+                                <span class="badge-dot"></span>
+                                <span class="badge-text">Disconnected</span>
+                            </div>
+                            <p class="description-text">Requires Twilio configured in environment.</p>
+                        </div>
+                    </div>
+
+                    <!-- User Identity Card (INFO) -->
+                    <div class="bento-card info-card">
+                        <div class="card-header">
+                            <div class="icon-circle info-bg">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>Identity & Context</h3>
+                                <p>Personalize AI responses</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <input type="text" id="user-name" placeholder="Your Name">
+                                <input type="email" id="user-email" placeholder="Your Email">
+                            </div>
+                            <div class="sync-status-box info-date-box">
+                                <span class="label">Today's Date</span>
+                                <span class="value" id="current-display-date">March 12, 2026</span>
+                            </div>
+                            <button class="secondary-btn" id="btn-save-info">
+                                <i class="fas fa-save"></i>
+                                <span>Save Identity</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Email Creator -->
+                    <div class="bento-card sandbox-card" id="ai-composer-card">
+                        <div class="card-header">
+                            <div class="icon-circle ai-bg">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>AI Email Creator</h3>
+                                <p>Compose and send via Ollama</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <input type="text" id="composer-recipient" placeholder="Recipient (Name or Email)">
+                                <input type="text" id="composer-subject" placeholder="Subject">
+                            </div>
+                            <textarea id="composer-prompt" placeholder="What should this email be about?"></textarea>
+                            
+                            <div class="composer-actions">
+                                <button class="primary-btn" id="btn-create-draft">
+                                    <i class="fas fa-pen-nib"></i>
+                                    <span>Create Draft</span>
+                                </button>
+                            </div>
+
+                            <div id="composer-result" class="preview-panel hidden">
+                                <div class="preview-header">
+                                    <span class="tag">Generated Draft</span>
+                                </div>
+                                <textarea id="composer-output" class="content-editable" rows="8"></textarea>
+                                <div class="form-row action-row">
+                                    <button class="secondary-btn" id="btn-composer-rewrite">
+                                        <i class="fas fa-redo"></i>
+                                        <span>Rewrite</span>
+                                    </button>
+                                    <button class="save-btn" id="btn-composer-send">
+                                        <i class="fas fa-paper-plane"></i>
+                                        <span>Send Now</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Approval Center (RETURN) -->
+                    <div class="bento-card approval-card" id="approval-center">
+                        <div class="card-header">
+                            <div class="icon-circle security-bg">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>Approval Center</h3>
+                                <p>Manage allowed contacts</p>
+                            </div>
+                            <button id="btn-refresh-approvals" class="icon-btn" title="Refresh approvals">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="approval-list" id="pending-list">
+                                <li class="empty-state">No pending approvals.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Setup Wizard Section -->
+                <section class="setup-wizard" id="setup">
+                    <h2>Connection Wizard</h2>
+                    <div class="wizard-grid">
+                        <div class="wizard-step">
+                            <div class="step-num">01</div>
+                            <h4>Google Cloud</h4>
+                            <p>Enable Gmail API & add <code>credentials.json</code> to root.</p>
+                            <a href="/api/v1/auth/gmail/login" target="_blank" class="action-link">Start Link <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <div class="wizard-step">
+                            <div class="step-num">02</div>
+                            <h4>Messaging</h4>
+                            <p>Verify <code>TWILIO_SID</code> is in your <code>.env</code> file.</p>
+                        </div>
+                        <div class="wizard-step">
+                            <div class="step-num">03</div>
+                            <h4>AI Engine</h4>
+                            <p>Run <code>ollama pull llama3.1</code> to initialize the brain.</p>
+                        </div>
+                    </div>
+                <!-- Working Section -->
+                <section class="setup-wizard" id="working">
+                    <h2>Working</h2>
+                    <div class="bento-card settings-card">
+                        <div class="card-header">
+                            <div class="icon-circle ai-bg">
+                                <i class="fas fa-sliders-h"></i>
+                            </div>
+                            <div class="header-text">
+                                <h3>Engine Configuration</h3>
+                                <p>Manage how the AI behaves</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="input-group">
+                                    <label>AI Model</label>
+                                    <input type="text" value="llama3.1" disabled>
+                                </div>
+                                <div class="input-group">
+                                    <label>Sync Interval (sec)</label>
+                                    <input type="number" value="60" disabled>
+                                </div>
+                            </div>
+                            <p class="description-text">Advanced settings are managed via <code>config/settings.py</code>.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Helper Modal -->
+    <div id="helper-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How to use this app</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4><i class="fab fa-google"></i> Gmail Auto-Reply</h4>
+                    <p>Click "Process Unread" to sync your emails. For new senders, you'll see them in the Approval Center. You can allow them permanently or once.</p>
+                </div>
+                <div class="help-section">
+                    <h4><i class="fas fa-magic"></i> AI Email Creator</h4>
+                    <p>Enter a recipient, subject, and a prompt. The AI will generate a high-quality draft that you can rewrite or send instantly.</p>
+                </div>
+                <div class="help-section">
+                    <h4><i class="fas fa-user-shield"></i> Security</h4>
+                    <p>All AI processing is local using Ollama. Your data never leaves your machine except when sending an email via Gmail API.</p>
+                </div>
+            </div>
         </div>
-        <ul class="nav-links">
-            <li class="active"><a href="#"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-            <li><a href="#setup"><i class="fas fa-cog"></i> Setup Guide</a></li>
-            <li><a href="http://localhost:8000/docs" target="_blank"><i class="fas fa-book"></i> API Docs</a></li>
-        </ul>
-        <div class="system-status">
-            <div class="status-item">
-                <span class="status-dot green" id="engine-dot"></span>
-                <span class="status-label">Engine: <span id="engine-status">Checking...</span></span>
-            </div>
-        </div>
-    </nav>
+    </div>
 
-    <main class="content">
-        <header>
-            <h1>Command Center</h1>
-            <p class="subtitle">Managing your AI communication streams</p>
-        </header>
+    <!-- Background Decoration -->
+    <div class="bg-blur blur-1"></div>
+    <div class="bg-blur blur-2"></div>
 
-        <section class="grid">
-            <!-- AI Engine Card -->
-            <div class="card glass">
-                <div class="card-header">
-                    <span class="icon">🧠</span>
-                    <h3>AI Engine</h3>
-                </div>
-                <div class="card-body">
-                    <p class="data-label">Current Model</p>
-                    <h2 id="model-name">Loading...</h2>
-                    <div class="tag-row" id="available-models">
-                        <!-- Model tags here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gmail Sync Card -->
-            <div class="card glass">
-                <div class="card-header">
-                    <span class="icon">📧</span>
-                    <h3>Gmail Sync</h3>
-                </div>
-                <div class="card-body">
-                    <p class="description">Automatically check and reply to unread emails.</p>
-                    <button class="btn-primary" id="btn-sync-gmail">
-                        <span id="sync-text">Sync Now</span>
-                        <div class="spinner hidden" id="sync-spinner"></div>
-                    </button>
-                    <div id="sync-results" class="results-area"></div>
-                </div>
-            </div>
-
-            <!-- manual test Card -->
-            <div class="card glass large">
-                <div class="card-header">
-                    <span class="icon">✍️</span>
-                    <h3>Manual AI Draft</h3>
-                </div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" id="test-sender" placeholder="Sender Name">
-                        <input type="text" id="test-subject" placeholder="Subject">
-                    </div>
-                    <textarea id="test-body" placeholder="Paste the email content here..."></textarea>
-                    <button class="btn-secondary" id="btn-test-ai">Generate Draft</button>
-                    <div id="ai-draft-output" class="draft-output hidden">
-                        <p class="label">AI Drafted Response:</p>
-                        <div class="draft-text" id="draft-text"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Setup Guide Section -->
-        <section id="setup" class="setup-section">
-            <h2>Quick Setup Guide</h2>
-            <div class="setup-grid">
-                <div class="setup-card">
-                    <h4>1. Gmail</h4>
-                    <p>Place <code>credentials.json</code> in root and visit <a href="/api/v1/auth/gmail/login" target="_blank">Login</a>.</p>
-                </div>
-                <div class="setup-card">
-                    <h4>2. WhatsApp</h4>
-                    <p>Add Twilio keys to <code>.env</code> and set webhook to <code>/api/v1/webhooks/whatsapp</code>.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="app.js"></script>
+    <script src="/static/app.js"></script>
 </body>
 </html>
