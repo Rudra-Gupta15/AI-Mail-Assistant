@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+langchain
+langchain-community
+langchain-ollama
+httpx
+python-dotenv
+python-multipart

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mail Assistant | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <nav class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🤖</span>
+            <span class="logo-text">AI Mail</span>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#setup"><i class="fas fa-cog"></i> Setup Guide</a></li>
+            <li><a href="http://localhost:8000/docs" target="_blank"><i class="fas fa-book"></i> API Docs</a></li>
+        </ul>
+        <div class="system-status">
+            <div class="status-item">
+                <span class="status-dot green" id="engine-dot"></span>
+                <span class="status-label">Engine: <span id="engine-status">Checking...</span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <header>
+            <h1>Command Center</h1>
+            <p class="subtitle">Managing your AI communication streams</p>
+        </header>
+
+        <section class="grid">
+            <!-- AI Engine Card -->
+            <div class="card glass">
+                <div class="card-header">
+                    <span class="icon">🧠</span>
+                    <h3>AI Engine</h3>
+                </div>
+                <div class="card-body">
+                    <p class="data-label">Current Model</p>
+                    <h2 id="model-name">Loading...</h2>
+                    <div class="tag-row" id="available-models">
+                        <!-- Model tags here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gmail Sync Card -->
+            <div class="card glass">
+                <div class="card-header">
+                    <span class="icon">📧</span>
+                    <h3>Gmail Sync</h3>
+                </div>
+                <div class="card-body">
+                    <p class="description">Automatically check and reply to unread emails.</p>
+                    <button class="btn-primary" id="btn-sync-gmail">
+                        <span id="sync-text">Sync Now</span>
+                        <div class="spinner hidden" id="sync-spinner"></div>
+                    </button>
+                    <div id="sync-results" class="results-area"></div>
+                </div>
+            </div>
+
+            <!-- manual test Card -->
+            <div class="card glass large">
+                <div class="card-header">
+                    <span class="icon">✍️</span>
+                    <h3>Manual AI Draft</h3>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" id="test-sender" placeholder="Sender Name">
+                        <input type="text" id="test-subject" placeholder="Subject">
+                    </div>
+                    <textarea id="test-body" placeholder="Paste the email content here..."></textarea>
+                    <button class="btn-secondary" id="btn-test-ai">Generate Draft</button>
+                    <div id="ai-draft-output" class="draft-output hidden">
+                        <p class="label">AI Drafted Response:</p>
+                        <div class="draft-text" id="draft-text"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup Guide Section -->
+        <section id="setup" class="setup-section">
+            <h2>Quick Setup Guide</h2>
+            <div class="setup-grid">
+                <div class="setup-card">
+                    <h4>1. Gmail</h4>
+                    <p>Place <code>credentials.json</code> in root and visit <a href="/api/v1/auth/gmail/login" target="_blank">Login</a>.</p>
+                </div>
+                <div class="setup-card">
+                    <h4>2. WhatsApp</h4>
+                    <p>Add Twilio keys to <code>.env</code> and set webhook to <code>/api/v1/webhooks/whatsapp</code>.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
